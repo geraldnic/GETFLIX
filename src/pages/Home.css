@@ -1,0 +1,81 @@
+body {
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.mainCont {
+    background-color: black;
+    color: white;
+}
+
+.horizontal-scrollable {
+    overflow-x: scroll;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 10px;
+}
+
+.scroller::-webkit-scrollbar-track{
+    background: transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.scroller::-webkit-scrollbar{
+    height: 8px;
+    width: 8px;
+}
+
+.scroller::-webkit-scrollbar-thumb{
+    background: #141414; 
+    border-radius: 10px;
+}
+
+.hs {
+    display: inline-block;
+    margin: 10px;
+}
+
+*:focus {
+    outline: none;
+}
+
+select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: transparent;
+    color: white;
+    border: none;
+    overflow: hidden;
+  }
+
+  .selector select option {
+    display: inline-block;
+    margin: 10px;
+  }
+
+  .selector {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  .sub {
+    border-left: 4px solid red;
+    padding-left: 10px;
+  }
+
+  option:hover {
+    background-color: #212121;
+    border-radius: 5px;
+  }
+
+  option:checked {
+    border-radius: 5px;
+    background-color: #808080;
+    color: white;
+  }
+
+  option {
+    font-weight: 500;
+  }
+  
+
+
