@@ -24,17 +24,19 @@ import {
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from "./pages/Home";
-import List from "./pages/List";
+import Home from "./pages/Home/Home";
+import List from "./pages/List/List";
+import "./App.css";
+import Detail from './pages/Details/Detail';
 
 class App extends Component{
   render(){
       return(
         <Router>
           <div className='mainCont'>
-            <Navbar bg="dark" variant="dark" expand="lg" style={{marginBottom:'50px'}}>
+            <Navbar bg="dark" variant="dark" expand="lg">
                 <Container>
-                  <Navbar.Brand href="/">Gary 21</Navbar.Brand>
+                  <Navbar.Brand className='brand' href="/">GETFLIX</Navbar.Brand>
                   <Navbar.Toggle aria-controls="basic-navbar-nav" />
                   <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
@@ -74,6 +76,7 @@ class App extends Component{
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/list/:type/:category" element={<List />} />
+              <Route path="/detail/:type/:id" element={<Detail />} />
             </Routes>
           </div>
         </Router>

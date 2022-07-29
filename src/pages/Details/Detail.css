@@ -1,0 +1,59 @@
+/* @media only screen and (max-width: 1000px) {
+    .mainImage {
+        width: 220px;
+    }
+  } */
+
+.genres {
+    display: inline-block;
+    margin-left: 5px;
+    background-color: #00203FFF;
+    color: #ADEFD1FF;
+    border-radius: 10px;
+    padding: 0px 7px 0px 7px;
+}
+
+.mainImage {
+    margin: 0;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    
+}
+
+.outerImage{
+    position: relative;
+    min-height: 500px;
+    max-height: 550px;
+}
+
+.mainDesc {
+    position: absolute;
+    top: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%); 
+    margin-left: 10px;
+    margin-right: 10px;
+    /* nanti malam tanya mas ratis */
+}
+
+.outerDesc{
+    position: relative;
+    min-height: 500px;
+    max-height: 550px;
+}
+
+.mainDetailContainer {
+    background-size: cover;
+    z-index: 1;
+}
+
+.inner {
+    background-image: linear-gradient(to right, rgba(173, 239, 209, 1) 150px, rgba(173, 239, 209, 0.84) 100%);
+    height: fit-content;
+    color: #00203FFF;
+    margin-left: -15px;
+    margin-right: -15px;
+}

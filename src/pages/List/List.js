@@ -1,7 +1,7 @@
 import {React, Component, useState, useEffect} from 'react';
-import { Routes, Route, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import DisplayCard from '../components/DisplayCard';
+import DisplayCard from '../../components/DisplayCard';
 
 import {Col, 
     Card, 

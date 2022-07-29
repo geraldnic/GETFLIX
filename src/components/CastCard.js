@@ -14,24 +14,20 @@ import {Col,
     NavDropdown
   } from "react-bootstrap";
 
-import {Link} from "react-router-dom";
-
   import './DisplayCard.css';
 
-  function DisplayCard(props) {
+  function CastCard(props) {
     return (
-    <Link style={{textDecoration:'none' }} to={`/detail/${props.type}/${props.id}`}>
       <Card className="mainCard" style={{ width: '12rem', border:'none', backgroundColor:'black'}}>
           <Card.Img style={{borderRadius:'20px'}} variant="top" src={props.img} />
           <Card.Body>
-              <Card.Title style={{fontSize:'15px', color:'white'}}>{props.title}</Card.Title>
+              <Card.Title style={{fontSize:'15px', color:'white'}}>{props.name}</Card.Title>
               <Card.Text style={{fontSize:'14px', color:'grey'}}>
-              ({moment(props.date).format('YYYY')})
+              {props.role}
               </Card.Text>
           </Card.Body>
       </Card>
-    </Link>
     );
   }
 
-  export default DisplayCard;
+  export default CastCard;
