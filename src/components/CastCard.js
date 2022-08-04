@@ -18,7 +18,7 @@ import {Col,
 
   function CastCard(props) {
     return (
-      <Card className="mainCard" style={{ width: '12rem', border:'none', backgroundColor:'black'}}>
+      <Card className="mainCard" style={{ width: '10rem', border:'none', backgroundColor:'black'}}>
           <Card.Img style={{borderRadius:'20px'}} variant="top" src={props.img} />
           <Card.Body>
               <Card.Title style={{fontSize:'15px', color:'white'}}>{props.name}</Card.Title>

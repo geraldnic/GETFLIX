@@ -1,8 +1,16 @@
-/* @media only screen and (max-width: 1000px) {
-    .mainImage {
-        width: 220px;
+@media only screen and (max-width: 1220px) {
+    .trailerVid {
+        width: 480px;
+        height: 360px;
     }
-  } */
+  }
+
+
+@media only screen and (max-width: 500px) {
+.trailerVid {
+    width: 80%;
+}
+}
 
 .genres {
     display: inline-block;
@@ -61,4 +69,73 @@
 .duration {
     display: inline-block;
     margin-right: 10px;
+}
+
+.profileSneek {
+    display: inline-block;
+}
+
+.reviewContent {
+    max-height: 150px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+}
+
+.reviewContainer {
+    height: 300px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+    overflow-x: hidden;
+}
+
+.outerScroller::-webkit-scrollbar-track{
+    background: transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.outerScroller::-webkit-scrollbar{
+    height: 12px;
+    width: 12px;
+}
+
+.outerScroller::-webkit-scrollbar-thumb{
+    background: #262626; 
+    border-radius: 10px;
+}
+
+.outerScroller {
+    padding-right: 10px;
+}
+
+.sideReview {
+    margin-top:50px;
+    background-color: #00203FFF;
+    color: #FCA311;
+    padding: 0 7px 7px 7px;
+    border-radius: 10px;
+}
+
+.sideTitle {
+    margin-bottom:20px;
+    color: #ADEFD1FF;
+}
+
+.trailerSwiper {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.trailerContainer {
+    margin-top:50px;
+    background-color: #00203FFF;
+    color: #ADEFD1FF;
+    padding: 0 7px 7px 7px;
+    border-radius: 10px;
+}
+
+.avtBig {
+    width: 45px;
+    height: 45px;
 }

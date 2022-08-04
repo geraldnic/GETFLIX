@@ -96,7 +96,7 @@ function Home() {
               {/* <Image className='searchBg' src={searchBackground} style={{width:'100%'}}/> */}
                 <div className='searchContent'>
                   <h2 className='searchTitle1'>Welcome.</h2>
-                  <h3 className='searchTitle2'>Millions of movies, TV shows, and people to discover. Explore now!</h3>
+                  <h3 className='searchTitle2'>Millions of movies, TV shows, and people to discover.</h3>
                   <form className='searchForm'>
                     <input className='searchInput' placeholder='Search for movie, tv show, person...'></input>
                     <Button className='searchButton' variant="success">Search</Button>
