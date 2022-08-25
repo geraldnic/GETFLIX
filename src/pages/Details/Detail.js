@@ -1,26 +1,20 @@
 import axios from 'axios';
-import {React, Component, useState, useEffect} from 'react'; 
+import {React, useState, useEffect} from 'react'; 
 import moment from "moment";
 import { Swiper, SwiperSlide } from 'swiper/react';
-import SwiperCore, { Navigation } from 'swiper';
+import { Navigation } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/navigation';
 
 import {Col, 
     Card, 
-    ListGroup, 
-    ListGroupItem, 
     Container, 
     Row, 
     Image, 
-    Button, 
-    Modal, 
-    Nav, 
-    Navbar, 
-    NavDropdown
   } from "react-bootstrap";
 
   import { IoStar } from 'react-icons/io5';
+  import { BsFacebook, BsInstagram, BsTwitter } from "react-icons/bs";
 
   import { useParams } from 'react-router-dom';
 
@@ -48,6 +42,9 @@ import castImg from '../../assets/cast.jpg';
     const [reviews, setReviews] = useState({data: []});
     const [video, setVideo] = useState({data: []});
     const [gallery, setGallery] = useState({data: []});
+    const [languages, setLanguages] = useState({data: []});
+    const [keywords, setKeywords] = useState({data: []});
+    const [social, setSocial] = useState({data: []});
 
     let {id} = useParams();
     let {type} = useParams();   
@@ -57,6 +54,7 @@ import castImg from '../../assets/cast.jpg';
         .then((det) => {
             setDetails({data:det.data});
             setGenres({data:det.data.genres});
+            setLanguages({data:det.data.spoken_languages});
         })
         .catch(console.error);
 
@@ -87,24 +85,36 @@ import castImg from '../../assets/cast.jpg';
 
         axios.get(`https://api.themoviedb.org/3/${type}/${id}/images?api_key=0594de7fc8c74e81a956ee14a5b952bd`)
         .then((gal) => {
-            setGallery({data:gal.data.results});
+            setGallery({data:gal.data.posters});
+        })
+        .catch(console.error);
+
+        axios.get(`https://api.themoviedb.org/3/${type}/${id}/keywords?api_key=0594de7fc8c74e81a956ee14a5b952bd`)
+        .then((kw) => {
+            setKeywords({data:kw.data.keywords});
+        })
+        .catch(console.error);
+
+        axios.get(`https://api.themoviedb.org/3/${type}/${id}/external_ids?api_key=0594de7fc8c74e81a956ee14a5b952bd`)
+        .then((ei) => {
+            setSocial({data:ei.data});
         })
         .catch(console.error);
       }, []);
 
-      console.log(gallery);
-
       const director = crews.data.filter(dir => {
-        return dir.job == 'Director';
+        return dir.job === 'Director';
       })
       
       const writer = crews.data.filter(wr => {
-        return wr.job == "Writer";
+        return wr.job === "Writer";
       })
 
       const trailer = video.data.filter(tr => {
-        return tr.type == "Trailer";
+        return tr.type === "Trailer";
       })
+
+      console.log(keywords);
 
     return (
         <Container fluid>
@@ -127,13 +137,13 @@ import castImg from '../../assets/cast.jpg';
                                         <p key={genre.id} className='genres'>{genre.name}</p>
                                     )}
                                     <br />
-                                    {type == 'movie' &&
+                                    {type === 'movie' &&
                                             <p className='duration'>Runtime: {details.data.runtime} mins</p>
                                     }
-                                    {type == 'tv' &&
+                                    {type === 'tv' &&
                                             <p className='duration'>{details.data.number_of_seasons} seasons / {details.data.number_of_episodes} episodes</p>
                                     }
-                                    <p className='duration'><IoStar /> {parseFloat(Math.round(details.data.vote_average*10)/10).toFixed(1)}</p>
+                                    <p className='duration'><IoStar /> {parseFloat(Math.round(details.data.vote_average*10)/10).toFixed(1)} ({details.data.vote_count})</p>
                                     <h4>Overview</h4>
                                     <p>{details.data.overview}</p>
                                     <Row>
@@ -167,61 +177,142 @@ import castImg from '../../assets/cast.jpg';
             <Container>
                 <Row>
                     <Col lg={8}>
-                        <div className='trailerContainer'>
-                            <h2 style={{paddingTop:'10px', paddingLeft:'10px'}}>Trailers</h2>
-                            <Swiper
-                            modules={[Navigation]}
-                            slidesPerView={1}
-                            loop={true}
-                            navigation
-                            className='trailerSwiper'
-                            >
-                                {trailer.map(trailers =>
-                                    <SwiperSlide key={trailers.id}>
-                                        <iframe width="550" height="412" className='trailerVid' src={base_youtube + trailers.key} />
-                                    </SwiperSlide>
-                                )}
-                            </Swiper>
-                        </div>
+                        <Row>
+                            <Col lg={12}>
+                                <div className='trailerContainer'>
+                                    <h2 style={{paddingTop:'10px', paddingLeft:'10px'}}>Trailers</h2>
+                                    <Swiper
+                                    modules={[Navigation]}
+                                    slidesPerView={1}
+                                    loop={true}
+                                    navigation
+                                    className='trailerSwiper'
+                                    >
+                                        {trailer.map(trailers =>
+                                            <SwiperSlide key={trailers.id}>
+                                                <iframe title={trailers.id} width="550" height="412" className='trailerVid' src={base_youtube + trailers.key} />
+                                            </SwiperSlide>
+                                        )}
+                                    </Swiper>
+                                </div>
+                            </Col>
+                            <Col lg={12}>
+                                <div className='galleryContainer'>
+                                    <h2 style={{paddingTop:'10px', paddingLeft:'10px'}}>Gallery</h2>
+                                    <div className='horizontal-scrollable scroller justify-content-center'>
+                                        {gallery.data.map(gal => 
+                                        <div key={gal.id} className='hs'>
+                                            <Card className="galCard">
+                                                <Card.Img style={{borderRadius:'20px'}} variant="top" src={base_image + gal.file_path} />
+                                            </Card>
+                                        </div>
+                                        )}
+                                    </div>
+                                </div>
+                            </Col>
+                        </Row>
                     </Col>
                     <Col lg={4}>
-                        <div className='sideDetail'>
-                            <div className='sideReview'>
-                                <h2 className='sideTitle'>Reviews</h2>
-                                <div className='reviewContainer outerScroller'>
-                                {reviews.data.map(rev =>
-                                    <div key={rev.id} style={{marginBottom:"30px"}}>
-                                        <Row>
-                                            <Col md={2}>
-                                            {rev.author_details.avatar_path ?
-                                                <>
-                                                {rev.author_details.avatar_path.slice(0,6) == '/https' ?
-                                                    <Image src={rev.author_details.avatar_path.replace('/https', 'https')} className='avtBig' roundedCircle/>
-                                                    : 
-                                                    <Image src={base_avatar + rev.author_details.avatar_path} roundedCircle/>  
-                                                }
-                                                </>
-                                                :
-                                                <Image src={avatar} roundedCircle/>
-                                            }
-                                            </Col>
-                                            <Col md={10}>
-                                                <h5 style={{color: '#F93800'}}>{rev.author_details.username}</h5>
-                                                <p style={{marginTop:'-10px', color: '#F93800'}}>{moment(rev.created_at).format('MMMM Do, YYYY')}</p>
-                                            </Col>
-                                        </Row>
-                                        <Row>
-                                            <Col md={12}>
-                                                <div className='reviewContent scroller'>
-                                                    <p>{rev.content}</p>
-                                                </div>
-                                            </Col>
-                                        </Row>
+                        <Row>
+                            <Col lg={12}>
+                                <div className='sideDetail'>
+                                    <div className='sideReview'>
+                                        <h2 className='sideTitle'>Reviews</h2>
+                                        <div className='reviewContainer outerScroller'>
+                                        {reviews.data.map(rev =>
+                                            <div key={rev.id} style={{marginBottom:"30px"}}>
+                                                <Row>
+                                                    <Col md={2}>
+                                                    {rev.author_details.avatar_path ?
+                                                        <>
+                                                        {rev.author_details.avatar_path.slice(0,6) === '/https' ?
+                                                            <Image src={rev.author_details.avatar_path.replace('/https', 'https')} className='avtBig' roundedCircle/>
+                                                            : 
+                                                            <Image src={base_avatar + rev.author_details.avatar_path} roundedCircle/>  
+                                                        }
+                                                        </>
+                                                        :
+                                                        <Image src={avatar} roundedCircle/>
+                                                    }
+                                                    </Col>
+                                                    <Col md={10}>
+                                                        <h5 style={{color: '#F93800'}}>{rev.author_details.username}</h5>
+                                                        <p style={{marginTop:'-10px', color: '#F93800'}}>{moment(rev.created_at).format('MMMM Do, YYYY')}</p>
+                                                    </Col>
+                                                </Row>
+                                                <Row>
+                                                    <Col md={12}>
+                                                        <div className='reviewContent scroller'>
+                                                            <p>{rev.content}</p>
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            </div>
+                                        )}
+                                        </div>
                                     </div>
-                                )}
                                 </div>
-                            </div>
-                        </div>
+                            </Col>
+                            <Col lg={12}>
+                                <div className='detail'>
+                                    <h2 className='sideTitle' style={{marginBottom:'none'}}>Details</h2>
+                                    <Row>
+                                        <Col sm={6}>
+                                            <h5 className='subDetails'>Status</h5>
+                                            <h7 className='subDetailsV'>{details.data.status}</h7>
+                                        </Col>
+                                        <Col sm={6}>
+                                            <h5 className='subDetails'>Budget</h5>
+                                            {details.data.budget > 0 ?
+                                                <h7 className='subDetailsV'>${details.data.budget}</h7>
+                                                :
+                                                <h7 className='subDetailsV'>-</h7>
+                                            }
+                                        </Col>
+                                        <Col sm={6}>
+                                            <h5 className='subDetails'>Languages</h5>
+                                            {languages.data.map(lang =>
+                                                <h7 key={lang.id} className='subDetailsV'>{lang.name}<br /></h7>
+                                                )}
+                                        </Col>
+                                        <Col sm={6}>
+                                            <h5 className='subDetails'>Revenue</h5>
+                                            {details.data.revenue > 0 ?
+                                                <h7 className='subDetailsV'>${details.data.revenue}</h7>
+                                                :
+                                                <h7 className='subDetailsV'>-</h7>
+                                            }
+                                        </Col>
+                                        <Col sm={12}>
+                                            <h5 className='subDetails'>Keywords</h5>
+                                            <div className='keywordsContent scroller'>
+                                                {keywords.data.length === 0 ?
+                                                    <p style={{color: '#FCA311'}}>-</p>
+                                                    :
+                                                    <>
+                                                        {keywords.data.map(kw => 
+                                                            <p key={kw.id} className='keywords'>{kw.name}</p>
+                                                        )} 
+                                                    </>
+                                                }
+                                                 
+                                            </div>
+                                        </Col>
+                                        <Col sm={12}>
+                                            <a href={'https://www.facebook.com/' + social.data.facebook_id} style={{color:'inherit'}} target='_blank' rel='noreferrer'>
+                                                <BsFacebook size={30} className='socialIcon'/>
+                                            </a>
+                                            <a href={'https://www.instagram.com/' + social.data.instagram_id} style={{color:'inherit'}} target='_blank' rel='noreferrer'>
+                                                <BsInstagram size={30} className='socialIcon'/>
+                                            </a>
+                                            <a href={'https://www.twitter.com/' + social.data.twitter_id} style={{color:'inherit'}} target='_blank' rel='noreferrer'>
+                                            <BsTwitter size={30} className='socialIcon'/>
+                                            </a>
+                                        </Col>
+                                    </Row>
+                                </div>
+                            </Col>
+                        </Row>
                     </Col>
                     <h2 style={{marginTop:'50px'}}>Cast</h2>
                     <div className='horizontal-scrollable scroller justify-content-center'>

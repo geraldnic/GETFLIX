@@ -139,3 +139,61 @@
     width: 45px;
     height: 45px;
 }
+
+.galCard {
+    width: 10rem;
+    border: none;
+    background-color:transparent;
+}
+
+.galleryContainer {
+    margin-top:30px;
+    background-color: #00203FFF;
+    color: #ADEFD1FF;
+    padding: 0 7px 7px 7px;
+    border-radius: 10px;
+}
+
+.detail {
+    height: 470px;
+    background-color: #00203FFF;
+    margin-top:30px;
+    border-radius: 10px;
+    padding: 0 7px 7px 7px;
+}
+
+.subDetails {
+    color: #F93800;
+    margin-top: 10px;
+}
+
+.subDetailsV{
+    color: #FCA311;
+}
+
+.keywords {
+    display: inline-block;
+    margin-left: 5px;
+    background-color: #ADEFD1FF;
+    color: #00203FFF;
+    border-radius: 10px;
+    padding: 0px 7px 0px 7px;
+    font-weight: 500;
+}
+
+.keywordsContent {
+    max-height: 120px;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: auto;
+}
+
+.socialIcon{
+    margin: 20px 10px 0px 10px;
+}
+
+.socialIcon:hover {
+    transform: scale(1.1);
+    transition: 0.3s;
+    cursor: pointer;
+}
